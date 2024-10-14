@@ -13,14 +13,18 @@ import java.util.Optional;
 public class CustomerController {
 
     private final CustomerRepository customerRepository;
+    private CustomerService customerService;
 
     public CustomerController(CustomerRepository customerRepository) {
+
         this.customerRepository = customerRepository;
+        this.customerService = customerService;
+
     }
 
-    @GetMapping
+    @GetMapping("/getAll")
     public List<Customer> getAllCustomers() {
-        return customerRepository.findAll();
+        return customerService.getAll();
     }
 
     @GetMapping("/{id}")
