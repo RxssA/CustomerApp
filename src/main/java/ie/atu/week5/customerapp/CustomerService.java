@@ -29,12 +29,15 @@ public class CustomerService {
         }
     }
 
-    public void create(Customer customer){
-        customerRepository.save(customer);
+    public Customer create(Customer customer){
+        return customerRepository.save(customer);
     }
 
-    public List<Customer> delete(String id){
-        customerRepository.deleteById(id);
-        return customerRepository.findAll();
+    public ResponseEntity<Void> delete(String id){
+        if (customerRepository.existsById(id)) {
+            customerRepository.deleteById(id);
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 }
