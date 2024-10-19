@@ -1,7 +1,6 @@
 package ie.atu.week5.customerapp;
 
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +16,7 @@ public class OrderController {
         this.orderRepository = orderRepository;
     }
 
-    @GetMapping
+    @GetMapping("/getAllOrders")
     public List<Order> getAllOrders() {
         return orderRepository.findAll();
     }
@@ -28,7 +27,7 @@ public class OrderController {
         return ResponseEntity.ok(orders);
     }
 
-    @PostMapping
+    @PostMapping("/createOrder")
     public ResponseEntity<Order> createOrder(@Valid @RequestBody Order order) {
         Order savedOrder = orderRepository.save(order);
         return ResponseEntity.ok(savedOrder);

@@ -11,9 +11,9 @@ import java.util.List;
 public class CustomerController {
 
     private final CustomerRepository customerRepository;
-    private CustomerService customerService;
+    private final CustomerService customerService;
 
-    public CustomerController(CustomerRepository customerRepository) {
+    public CustomerController(CustomerRepository customerRepository, CustomerService customerService) {
 
         this.customerRepository = customerRepository;
         this.customerService = customerService;
@@ -30,13 +30,13 @@ public class CustomerController {
         return customerService.getCustomerById(id);
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public Customer createCustomer(@Valid @RequestBody Customer customer) {
         return customerService.create(customer);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCustomer(@PathVariable String id) {
-       return customerService.delete(id);
+        return customerService.delete(id);
     }
 }
