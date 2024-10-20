@@ -10,7 +10,7 @@ import java.util.Optional;
 @Service
 public class OrderService {
 
-    OrderRepository orderRepository;
+    private OrderRepository orderRepository;
     @Autowired
     public OrderService(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
@@ -31,11 +31,10 @@ public class OrderService {
         return ResponseEntity.ok(orderRepository.save(order));
     }
 
-    public ResponseEntity<Order> deleteOrder(String orderId) {
-        Optional<Order> order = orderRepository.findById(orderId);
-        if (order.isPresent()) {
-            orderRepository.delete(order.get());
-            return ResponseEntity.ok(order.get());
+    public ResponseEntity<Void> deleteOrder(String orderId) {
+        if (orderRepository.existsById(orderId)) {
+            orderRepository.deleteById(orderId);
+            return ResponseEntity.noContent().build();
         }
         return ResponseEntity.notFound().build();
     }
